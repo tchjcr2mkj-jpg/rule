@@ -53,53 +53,46 @@
   "http_clients": [
     {"tag": "直连下载", "detour": "直连"}
   ],
- "route": {
-  "rules": [
-    {"type": "logical", "mode": "and", "rules": [{"port":, "invert": true}, {"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": "geoip-cn"}]}], "action": "bypass"},
-    {"type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "stun", "quic", "dns"], "timeout": "100ms"},
-    {"type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
-    {"ip_is_private": true, "outbound": "直连"},
-    {"type": "logical", "mode": "or", "rules": [{"port": 853}, {"protocol": ["stun", "quic"]}], "action": "reject", "no_drop": true},
-    {"network": "icmp", "action": "resolve"},
-    {"network": "icmp", "outbound": "直连"},
-    {"clash_mode": "Direct", "outbound": "直连"},
-    {"clash_mode": "Global", "outbound": "GLOBAL"},
-    {"rule_set": "geosite-private", "outbound": "直连"},
-    {"rule_set": "geosite-category-ai-!cn", "outbound": "AI"},
-    {"rule_set": "geosite-youtube", "outbound": "YouTube"},
-    {"rule_set": "geosite-google", "outbound": "Google"},
-    {"rule_set": "geosite-github", "outbound": "Github"},
-    {"rule_set": "geosite-onedrive", "outbound": "OneDrive"},
-    {"rule_set": "geosite-microsoft@cn", "outbound": "直连"},
-    {"rule_set": "geosite-microsoft", "outbound": "Microsoft"},
-    {"rule_set": "geosite-apple@cn", "outbound": "直连"},
-    {"rule_set": "geosite-apple", "outbound": "Apple"},
-    {"rule_set": "geosite-telegram", "outbound": "Telegram"},
-    {"rule_set": "geosite-tiktok", "outbound": "TikTok"},
-    
-    // ⭐【关键修改：移至海外大规则上方】优先拦截并分流成人网站流量
-    {
-      "domain_suffix": [
+  "route": {
+    "rules": [
+      {"type": "logical", "mode": "and", "rules": [{"port": [53, 853], "invert": true}, {"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": "geoip-cn"}]}], "action": "bypass"},
+      {"type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "stun", "quic", "dns"], "timeout": "100ms"},
+      {"type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
+      {"ip_is_private": true, "outbound": "直连"},
+      {"type": "logical", "mode": "or", "rules": [{"port": 853}, {"protocol": ["stun", "quic"]}], "action": "reject", "no_drop": true},
+      {"network": "icmp", "action": "resolve"},
+      {"network": "icmp", "outbound": "直连"},
+      {"clash_mode": "Direct", "outbound": "直连"},
+      {"clash_mode": "Global", "outbound": "GLOBAL"},
+      
+      {"domain_suffix": [
         "pornhub.com", "phncdn.com", "phpride.com", 
         "stripchat.com", "stripchat.oons", 
         "xhamster.com", "xvideos.com", "xnxx.com", "youpornbank.com"
-      ], 
-      "outbound": "成人"
-    },
-    
-    {"rule_set": "geosite-paypal", "outbound": "Wallet"},
-    {"rule_set": "geosite-binance", "outbound": "Wallet"},
-    {"rule_set": "geosite-okx", "outbound": "Wallet"},
-    {"rule_set": "geosite-category-cryptocurrency", "outbound": "Wallet"},
-    {"rule_set": "geosite-steam@cn", "outbound": "直连"},
-    {"rule_set": "geosite-steam", "outbound": "Steam"},
-    
-    // ⭐ 广域海外规则移至自定义特定规则的下方进行兜底
-    {"rule_set": "geosite-geolocation-!cn", "outbound": "默认代理"},
-    
-    {"inbound": "mixed-in", "action": "resolve"},
-    {"rule_set": "geoip-telegram", "outbound": "Telegram"},
-    {"rule_set": "geoip-cn", "outbound": "直连"}
+      ], "outbound": "成人"},
+
+      {"rule_set": "geosite-private", "outbound": "直连"},
+      {"rule_set": "geosite-category-ai-!cn", "outbound": "AI"},
+      {"rule_set": "geosite-youtube", "outbound": "YouTube"},
+      {"rule_set": "geosite-google", "outbound": "Google"},
+      {"rule_set": "geosite-github", "outbound": "Github"},
+      {"rule_set": "geosite-onedrive", "outbound": "OneDrive"},
+      {"rule_set": "geosite-microsoft@cn", "outbound": "直连"},
+      {"rule_set": "geosite-microsoft", "outbound": "Microsoft"},
+      {"rule_set": "geosite-apple@cn", "outbound": "直连"},
+      {"rule_set": "geosite-apple", "outbound": "Apple"},
+      {"rule_set": "geosite-telegram", "outbound": "Telegram"},
+      {"rule_set": "geosite-tiktok", "outbound": "TikTok"},
+      {"rule_set": "geosite-paypal", "outbound": "Wallet"},
+      {"rule_set": "geosite-binance", "outbound": "Wallet"},
+      {"rule_set": "geosite-okx", "outbound": "Wallet"},
+      {"rule_set": "geosite-category-cryptocurrency", "outbound": "Wallet"},
+      {"rule_set": "geosite-steam@cn", "outbound": "直连"},
+      {"rule_set": "geosite-steam", "outbound": "Steam"},
+      {"rule_set": "geosite-geolocation-!cn", "outbound": "默认代理"},
+      {"inbound": "mixed-in", "action": "resolve"},
+      {"rule_set": "geoip-telegram", "outbound": "Telegram"},
+      {"rule_set": "geoip-cn", "outbound": "直连"}
     ],
     "rule_set": [
       {"tag": ["fakeipfilter-cn", "fakeipfilter-!cn"], "type": "remote", "format": "source", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/tchjcr2mkj-jpg/rule/refs/heads/main/rules/{tag}.json"},
@@ -139,7 +132,7 @@
       "dashboard": {
         "enabled": true,
         "path": "/etc/sing-box/dashboard",
-        "download_url": "https://gh-proxy.com/https://github.com/SagerNet/sing-box-dashboard/archive/refs/heads/gh-pages.zip"
+        "download_url": "https://gh-proxy.com/https://raw.githubusercontent.com/SagerNet/sing-box-dashboard/archive/refs/heads/gh-pages.zip"
       }
     }
   ],
