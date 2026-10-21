@@ -65,6 +65,8 @@
       {"clash_mode": "Direct", "outbound": "直连"},
       {"clash_mode": "Global", "outbound": "GLOBAL"},
       
+      {"domain": ["zh.stripchat.cam", "assets.chapturist.com"], "outbound": "成人"},
+      {"domain_suffix": ["chapturist.com", "stripchat.cam", "stripchat.com", "pornhub.com", "phncdn.com", "xhamster.com", "xvideos.com", "xnxx.com"], "outbound": "成人"},
       {"domain_keyword": ["chapturist", "stripchat", "pornhub", "phncdn", "xhamster", "xvideos", "xnxx"], "outbound": "成人"},
 
       {"rule_set": "geosite-private", "outbound": "直连"},
