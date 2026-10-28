@@ -55,7 +55,7 @@
   ],
   "route": {
     "rules": [
-      {"type": "logical", "mode": "and", "rules": [{"port":, "invert": true}, {"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": "geoip-cn"}]}], "action": "bypass"},
+      {"type": "logical", "mode": "and", "rules": [{"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": "geoip-cn"}]}], "action": "bypass"},
       {"type": "logical", "mode": "or", "rules": [{"domain_suffix": "://apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "stun", "quic", "dns"], "timeout": "100ms"},
       {"type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
       {"ip_is_private": true, "outbound": "直连"},
@@ -93,10 +93,10 @@
       {"rule_set": "geoip-cn", "outbound": "直连"}
     ],
     "rule_set": [
-      {"tag": ["fakeipfilter-cn", "fakeipfilter-!cn"], "type": "remote", "format": "source", "url": "https://gh-proxy.com{tag}.json"},
-      {"tag": ["geosite-category-ai-!cn", "geosite-youtube", "geosite-google", "geosite-github", "geosite-onedrive", "geosite-microsoft", "geosite-microsoft@cn","geosite-apple", "geosite-apple@cn", "geosite-telegram", "geosite-tiktok", "geosite-paypal", "geosite-binance", "geosite-okx", "geosite-category-cryptocurrency", "geosite-steam@cn", "geosite-steam", "geosite-geolocation-!cn", "geosite-cn", "geosite-private"], "type": "remote", "format": "binary", "url": "https://gh-proxy.com{tag}.srs"},
-      {"tag": "geoip-telegram", "type": "remote", "format": "binary", "url": "https://gh-proxy.com"},
-      {"tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://gh-proxy.com"}
+      {"tag": ["fakeipfilter-cn", "fakeipfilter-!cn"], "type": "remote", "format": "source", "url": "https://gh-proxy.com/{tag}.json"},
+      {"tag": ["geosite-category-ai-!cn", "geosite-youtube", "geosite-google", "geosite-github", "geosite-onedrive", "geosite-microsoft", "geosite-microsoft@cn","geosite-apple", "geosite-apple@cn", "geosite-telegram", "geosite-tiktok", "geosite-paypal", "geosite-binance", "geosite-okx", "geosite-category-cryptocurrency", "geosite-steam@cn", "geosite-steam", "geosite-geolocation-!cn", "geosite-cn", "geosite-private"], "type": "remote", "format": "binary", "url": "https://gh-proxy.com/{tag}.srs"},
+      {"tag": "geoip-telegram", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/geoip-telegram.srs"},
+      {"tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/geoip-cn.srs"}
     ],
     "final": "漏网之鱼",
     "default_http_client": "直连下载",
