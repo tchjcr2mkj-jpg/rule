@@ -55,8 +55,8 @@
   ],
   "route": {
     "rules": [
-      {"type": "logical", "mode": "and", "rules": [{"port": [53, 853], "invert": true}, {"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": "geoip-cn"}]}], "action": "bypass"},
-      {"type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "stun", "quic", "dns"], "timeout": "100ms"},
+      {"type": "logical", "mode": "and", "rules": [{"port":, "invert": true}, {"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": "geoip-cn"}]}], "action": "bypass"},
+      {"type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "sniff", "quic", "dns"], "timeout": "100ms"},
       {"type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
       {"ip_is_private": true, "outbound": "直连"},
       {"type": "logical", "mode": "or", "rules": [{"port": 853}, {"protocol": ["stun", "quic"]}], "action": "reject", "no_drop": true},
@@ -64,11 +64,9 @@
       {"network": "icmp", "outbound": "直连"},
       {"clash_mode": "Direct", "outbound": "直连"},
       {"clash_mode": "Global", "outbound": "GLOBAL"},
-      
       {"domain": ["zh.stripchat.cam", "chapturist.com"], "outbound": "成人"},
       {"domain_suffix": ["chapturist.com", "stripchat.cam", "stripchat.com", "pornhub.com", "phncdn.com", "xhamster.com", "xvideos.com", "xnxx.com"], "outbound": "成人"},
       {"domain_keyword": ["chapturist", "stripchat", "pornhub", "phncdn", "xhamster", "xvideos", "xnxx"], "outbound": "成人"},
-
       {"rule_set": "geosite-private", "outbound": "直连"},
       {"rule_set": "geosite-category-ai-!cn", "outbound": "AI"},
       {"rule_set": "geosite-youtube", "outbound": "YouTube"},
@@ -117,47 +115,9 @@
     {
       "tag": "mixed-in",
       "type": "mixed",
-      "listen": "0.0.0.0",
-      "listen_port": 7890
+      "listen": "::",
+      "listen_port": 2080,
+      "set_system_proxy": true
     }
-  ],
-  "services": [
-    {
-      "type": "api",
-      "listen": "0.0.0.0",
-      "listen_port": 9090,
-      "secret": "passwd",
-      "dashboard": {
-        "enabled": true,
-        "path": "/etc/sing-box/dashboard",
-        "download_url": "https://gh-proxy.com/https://github.com/SagerNet/sing-box-dashboard/archive/refs/heads/gh-pages.zip"
-      }
-    }
-  ],
-  "experimental": {
-    "cache_file": {
-      "enabled": true,
-      "path": "/etc/sing-box/cache.db",
-      "store_dns": true
-    },
-    "clash_api": {
-      "external_controller": "0.0.0.0:9095",
-      "external_ui": "/etc/sing-box/ui",
-      "external_ui_download_url": "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip",
-      "secret": "passwd",
-      "default_mode": "Rule"
-    }
-  },
-  "certificate": {
-    "store": "chrome"
-  },
-  "ntp": {
-    "enabled": true,
-    "server": "time.apple.com"
-  },
-  "log": {
-    "disabled": false,
-    "level": "info",
-    "timestamp": true
-  }
+  ]
 }
