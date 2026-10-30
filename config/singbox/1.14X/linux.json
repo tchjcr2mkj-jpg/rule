@@ -15,7 +15,7 @@
       {"clash_mode": "Global", "server": "fakeip"},
       {"rule_set": ["fakeipfilter-cn", "geosite-cn", "geosite-microsoft@cn", "geosite-apple@cn", "geosite-private"], "server": "ali"},
       {"rule_set": "fakeipfilter-!cn", "server": "google"},
-      {"type": "logical", "mode": "and", "rules": [{"query_type": ["A", "AAAA"]}, {"rule_set": "geosite-geolocation-!cn", "invert": true}], "action": "evaluate", "server": "google", "client_subnet": "223.5.5.0/24","timeout": "2s"},
+      {"type": "logical", "mode": "and", "rules": [{"query_type": ["A", "AAAA"]}, {"rule_set": "geosite-geolocation-!cn", "invert": true}], "action": "evaluate", "server": "google", "client_subnet": "223.5.5.0/24", "timeout": "2s"},
       {"match_response": true, "rule_set": "geoip-cn", "server": "ali"},
       {"query_type": ["A", "AAAA"], "server": "fakeip", "rewrite_ttl": 1}
     ],
@@ -45,7 +45,7 @@
     {"tag": "德国手动", "type": "selector", "outbounds": []},
     {"tag": "美国手动", "type": "selector", "outbounds": []},
     {"tag": "手动选择", "type": "selector", "outbounds": []},
-    {"tag": "自动选择", "type": "urltest", "outbounds": [], "url": "https://clients1.google.com/generate_204", "interval": "30m", "tolerance": 60},
+    {"tag": "自动选择", "type": "urltest", "outbounds": [], "url": "https://clients1.google.com/generate_204", "interval": "30m", "tolerance": 100},
     {"tag": "延迟辅助", "type": "urltest", "outbounds": ["直连"], "url": "http://connect.rom.miui.com/generate_204", "interval": "30m"},
     {"tag": "GLOBAL", "type": "selector", "outbounds": ["默认代理", "AI", "YouTube", "Google", "Github", "Telegram", "TikTok", "成人规则", "Wallet", "Steam", "Microsoft", "OneDrive", "Apple", "漏网之鱼", "日本手动", "狮城手动", "德国手动", "美国手动", "手动选择", "自动选择", "延迟辅助", "直连"]},
     {"tag": "直连", "type": "direct", "domain_resolver": "ali"}
@@ -92,7 +92,7 @@
     ],
     "rule_set": [
       {"tag": ["fakeipfilter-cn", "fakeipfilter-!cn"], "type": "remote", "format": "source", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/tchjcr2mkj-jpg/rule/refs/heads/main/rules/{tag}.json"},
-      {"tag": ["geosite-category-ai-!cn", "geosite-youtube", "geosite-google", "geosite-github", "geosite-onedrive", "geosite-microsoft", "geosite-microsoft@cn","geosite-apple", "geosite-apple@cn", "geosite-telegram", "geosite-tiktok", "geosite-pornhub", "geosite-category-porn", "geosite-paypal", "geosite-binance", "geosite-okx", "geosite-category-cryptocurrency", "geosite-steam@cn", "geosite-steam", "geosite-geolocation-!cn", "geosite-cn", "geosite-private"], "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"},
+      {"tag": ["geosite-category-ai-!cn", "geosite-youtube", "geosite-google", "geosite-github", "geosite-onedrive", "geosite-microsoft", "geosite-microsoft@cn", "geosite-apple", "geosite-apple@cn", "geosite-telegram", "geosite-tiktok", "geosite-pornhub", "geosite-category-porn", "geosite-paypal", "geosite-binance", "geosite-okx", "geosite-category-cryptocurrency", "geosite-steam@cn", "geosite-steam", "geosite-geolocation-!cn", "geosite-cn", "geosite-private"], "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"},
       {"tag": "geoip-telegram", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs"},
       {"tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs"}
     ],
