@@ -33,7 +33,7 @@
     {"tag": "Github", "type": "selector", "outbounds": ["日本手动", "狮城手动", "德国手动", "美国手动", "手动选择", "自动选择"]},
     {"tag": "Telegram", "type": "selector", "outbounds": ["日本手动", "狮城手动", "德国手动", "美国手动", "手动选择", "自动选择"]},
     {"tag": "TikTok", "type": "selector", "outbounds": ["日本手动", "狮城手动", "德国手动", "美国手动", "手动选择", "自动选择"]},
-    {"tag": "成人", "type": "selector", "outbounds": ["日本手动", "狮城手动", "德国手动", "美国手动", "手动选择", "自动选择"]},
+    {"tag": "Netflix", "type": "selector", "outbounds": ["日本手动", "狮城手动", "德国手动", "美国手动", "手动选择", "自动选择"]},
     {"tag": "Wallet", "type": "selector", "outbounds": ["日本手动", "狮城手动", "德国手动", "美国手动", "手动选择", "自动选择"]},
     {"tag": "Steam", "type": "selector", "outbounds": ["日本手动", "狮城手动", "德国手动", "美国手动", "手动选择", "自动选择"]},
     {"tag": "Microsoft", "type": "selector", "outbounds": ["日本手动", "狮城手动", "德国手动", "美国手动", "手动选择", "自动选择", "直连"]},
@@ -45,9 +45,9 @@
     {"tag": "德国手动", "type": "selector", "outbounds": []},
     {"tag": "美国手动", "type": "selector", "outbounds": []},
     {"tag": "手动选择", "type": "selector", "outbounds": []},
-    {"tag": "自动选择", "type": "urltest", "outbounds": [], "url": "https://clients1.google.com/generate_204", "interval": "30m", "tolerance": 60},
+    {"tag": "自动选择", "type": "urltest", "outbounds": [], "url": "https://clients1.google.com/generate_204", "interval": "30m", "tolerance": 100},
     {"tag": "延迟辅助", "type": "urltest", "outbounds": ["直连"], "url": "http://connect.rom.miui.com/generate_204", "interval": "30m"},
-    {"tag": "GLOBAL", "type": "selector", "outbounds": ["默认代理", "AI", "YouTube", "Google", "Github", "Telegram", "TikTok", "成人", "Wallet", "Steam", "Microsoft", "OneDrive", "Apple", "漏网之鱼", "日本手动", "狮城手动", "德国手动", "美国手动", "手动选择", "自动选择", "延迟辅助", "直连"]},
+    {"tag": "GLOBAL", "type": "selector", "outbounds": ["默认代理", "AI", "YouTube", "Google", "Github", "Telegram", "TikTok", "Netflix", "Wallet", "Steam", "Microsoft", "OneDrive", "Apple", "漏网之鱼", "日本手动", "狮城手动", "德国手动", "美国手动", "手动选择", "自动选择", "延迟辅助", "直连"]},
     {"tag": "直连", "type": "direct", "domain_resolver": "ali"}
   ],
   "http_clients": [
@@ -56,7 +56,7 @@
   "route": {
     "rules": [
       {"type": "logical", "mode": "and", "rules": [{"port":, "invert": true}, {"clash_mode": "Global", "invert": true}, {"type": "logical", "mode": "or", "rules": [{"ip_is_private": true}, {"rule_set": "geoip-cn"}]}], "action": "bypass"},
-      {"type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "sniff", "quic", "dns"], "timeout": "100ms"},
+      {"type": "logical", "mode": "or", "rules": [{"domain_suffix": "push.apple.com"}, {"rule_set": "geoip-telegram"}], "invert": true, "action": "sniff", "sniffer": ["http", "tls", "stun", "quic", "dns"], "timeout": "100ms"},
       {"type": "logical", "mode": "or", "rules": [{"port": 53}, {"protocol": "dns"}], "action": "hijack-dns"},
       {"ip_is_private": true, "outbound": "直连"},
       {"type": "logical", "mode": "or", "rules": [{"port": 853}, {"protocol": ["stun", "quic"]}], "action": "reject", "no_drop": true},
@@ -64,9 +64,6 @@
       {"network": "icmp", "outbound": "直连"},
       {"clash_mode": "Direct", "outbound": "直连"},
       {"clash_mode": "Global", "outbound": "GLOBAL"},
-      {"domain": ["zh.stripchat.cam", "chapturist.com"], "outbound": "成人"},
-      {"domain_suffix": ["chapturist.com", "stripchat.cam", "stripchat.com", "pornhub.com", "phncdn.com", "xhamster.com", "xvideos.com", "xnxx.com"], "outbound": "成人"},
-      {"domain_keyword": ["chapturist", "stripchat", "pornhub", "phncdn", "xhamster", "xvideos", "xnxx"], "outbound": "成人"},
       {"rule_set": "geosite-private", "outbound": "直连"},
       {"rule_set": "geosite-category-ai-!cn", "outbound": "AI"},
       {"rule_set": "geosite-youtube", "outbound": "YouTube"},
@@ -79,6 +76,7 @@
       {"rule_set": "geosite-apple", "outbound": "Apple"},
       {"rule_set": "geosite-telegram", "outbound": "Telegram"},
       {"rule_set": "geosite-tiktok", "outbound": "TikTok"},
+      {"rule_set": "geosite-netflix", "outbound": "Netflix"},
       {"rule_set": "geosite-paypal", "outbound": "Wallet"},
       {"rule_set": "geosite-binance", "outbound": "Wallet"},
       {"rule_set": "geosite-okx", "outbound": "Wallet"},
@@ -92,7 +90,7 @@
     ],
     "rule_set": [
       {"tag": ["fakeipfilter-cn", "fakeipfilter-!cn"], "type": "remote", "format": "source", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/qichiyuhub/rule/refs/heads/main/rules/{tag}.json"},
-      {"tag": ["geosite-category-ai-!cn", "geosite-youtube", "geosite-google", "geosite-github", "geosite-onedrive", "geosite-microsoft", "geosite-microsoft@cn","geosite-apple", "geosite-apple@cn", "geosite-telegram", "geosite-tiktok", "geosite-paypal", "geosite-binance", "geosite-okx", "geosite-category-cryptocurrency", "geosite-steam@cn", "geosite-steam", "geosite-geolocation-!cn", "geosite-cn", "geosite-private"], "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"},
+      {"tag": ["geosite-category-ai-!cn", "geosite-youtube", "geosite-google", "geosite-github", "geosite-onedrive", "geosite-microsoft", "geosite-microsoft@cn","geosite-apple", "geosite-apple@cn", "geosite-telegram", "geosite-tiktok", "geosite-netflix", "geosite-paypal", "geosite-binance", "geosite-okx", "geosite-category-cryptocurrency", "geosite-steam@cn", "geosite-steam", "geosite-geolocation-!cn", "geosite-cn", "geosite-private"], "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/{tag}.srs"},
       {"tag": "geoip-telegram", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/telegram.srs"},
       {"tag": "geoip-cn", "type": "remote", "format": "binary", "url": "https://gh-proxy.com/https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs"}
     ],
@@ -115,9 +113,20 @@
     {
       "tag": "mixed-in",
       "type": "mixed",
-      "listen": "::",
-      "listen_port": 2080,
-      "set_system_proxy": true
+      "listen": "0.0.0.0",
+      "listen_port": 7890
+    }
+  ],
+  "services": [
+    {
+      "type": "api",
+      "listen": "0.0.0.0",
+      "listen_port": 9090,
+      "secret": "passwd",
+      "dashboard": {
+        "enabled": true,
+        "path": "dashboard"
+      }
     }
   ]
 }
