@@ -47,7 +47,7 @@
     {
       "tag": "自建节点",
       "type": "selector",
-      "outbounds": [自建-HY2]
+      "outbounds": []
     },
     {"tag": "手动选择", "type": "selector", "outbounds": ["自建节点"]},
     {"tag": "自动选择", "type": "urltest", "outbounds": ["自建节点"], "url": "https://clients1.google.com/generate_204", "interval": "30m", "tolerance": 100},
