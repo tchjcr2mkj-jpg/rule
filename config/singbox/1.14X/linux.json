@@ -7,7 +7,7 @@
       {"tag": "tx", "type": "https", "server": "doh.pub", "domain_resolver": "hosts"},
       {"tag": "google", "type": "https", "server": "8.8.8.8", "detour": "默认代理"},
       {"tag": "fakeip", "type": "fakeip", "inet4_range": "198.19.0.0/16"},
-      {"type": "hosts", "tag": "hosts", "predefined": {"doh.pub": ["1.12.12.21", "120.53.53.53"]}}
+      {"type": "hosts", "tag": "hosts", "predefined": {"doh.pub": ["1.12.12.12", "1.12.12.21", "120.53.53.53"]}}
     ],
     "rules": [
       {"query_type": ["HTTPS", "SVCB"], "action": "reject"},
@@ -147,7 +147,7 @@
       "external_controller": "0.0.0.0:9095",
       "external_ui": "/etc/sing-box/ui",
       "external_ui_download_url": "https://gh-proxy.com/https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip",
-      "secret": "passwd",
+      "secret": "samsung168",
       "default_mode": "Rule"
     }
   },
@@ -156,7 +156,7 @@
   },
   "ntp": {
     "enabled": true,
-    "server": "time.apple.com"
+    "server": "ntp.aliyun.com"
   },
   "log": {
     "disabled": false,
